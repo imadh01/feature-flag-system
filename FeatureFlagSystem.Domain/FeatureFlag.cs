@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FeatureFlagSystem.Domain
 {
-    internal class FeatureFlag
+    public class FeatureFlag
     {
     }
 }
