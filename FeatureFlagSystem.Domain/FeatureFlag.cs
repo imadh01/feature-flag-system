@@ -63,7 +63,7 @@ namespace FeatureFlagSystem.Domain
             IsEnabled = false;
             UpdatedAt = DateTime.UtcNow;
         }
-        // Business operation: Toggle feature
+        // Business operation: Toggle feature added for convenience
         public void Toggle()
         {
             IsEnabled = !IsEnabled;
