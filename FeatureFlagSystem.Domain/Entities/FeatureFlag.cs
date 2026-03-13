@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FeatureFlagSystem.Domain
+﻿namespace FeatureFlagSystem.Domain.Entities
 {
     public class FeatureFlag
     {
@@ -21,24 +15,29 @@ namespace FeatureFlagSystem.Domain
         private FeatureFlag() { }
 
         // Factory method pattern - controlled creation
-        public static FeatureFlag Create(string featureName, string? description = null, bool isEnabled = false, int rolloutPercentage = 0)
+        public static FeatureFlag Create(
+    string featureName,
+    string? description = null,
+    bool isEnabled = false,
+    int rolloutPercentage = 0)
         {
             // Business rule: Feature name is required
             if (string.IsNullOrWhiteSpace(featureName))
-                throw new ArgumentException("Feature name cannot be empty.", nameof(featureName));
+                throw new ArgumentException("Feature name cannot be empty", nameof(featureName));
+
             // Business rule: Feature name format
             if (featureName.Length > 100)
                 throw new ArgumentException("Feature name cannot exceed 100 characters", nameof(featureName));
+
             // Business rule: Rollout percentage must be 0-100
             if (rolloutPercentage < 0 || rolloutPercentage > 100)
-                throw new ArgumentOutOfRangeException(nameof(rolloutPercentage), "Rollout percentage must be between 0 and 100.");
+                throw new ArgumentException("Rollout percentage must be between 0 and 100", nameof(rolloutPercentage));
 
-            var now = DateTime.UtcNow;
-
+            // Use DateTime.UtcNow directly instead of storing in variable
             return new FeatureFlag
             {
-                FeatureName = featureName,
-                Description = description,
+                FeatureName = featureName.Trim(),
+                Description = description?.Trim(),
                 IsEnabled = isEnabled,
                 RolloutPercentage = rolloutPercentage,
                 CreatedAt = DateTime.UtcNow,
